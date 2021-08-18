@@ -1,0 +1,31 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/efystyle.css">
+</head>
+<body>
+<div class="my_container">
+    <div class="my_header">
+
+    </div>
+    <div class="my_main">
+        <div class="error_alert">
+            <b>{{ error }}</b>
+        </div>
+        <div class="my_main_container">
+
+        </div>
+    </div>
+    <div class="my_footer">
+        <div class="my_footer-copyright">
+        <span> {{ "now"|date('d/m/Y H:i', timezone="Europe/Moscow") }} Copyright &copy; 2021 by <a
+                href=""></a></span>
+        </div>
+    </div>
+</div>
+<!-- JavaScript Bundle with Popper -->
+<script src="js/bootstrap.js"></script>
+</body>
+</html>
