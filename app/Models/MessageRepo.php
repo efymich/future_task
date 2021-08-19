@@ -9,22 +9,24 @@ class MessageRepo
     private static string $tableName = "comments";
 
     public static function showAll() {
-        $sql = "SELECT FROM " . self::$tableName ;
+        $sql = "SELECT name,content,date FROM " . self::$tableName ;
 
-        return self::execute($sql);
+        $result = databaseExecute($sql);
+        return mysqli_fetch_all($result,MYSQLI_ASSOC);
     }
 
     /**
      * @param Message $message
      */
-    public static function putData(Message $message) {
-        $sql = "INSERT INTO " . self::$tableName . " VALUES (?,?,?)";
+    public static function putData(Message $message): void {
+        $sql = "INSERT INTO " . self::$tableName . "(name,content) VALUES (?,?)";
 
-        return self::execute($sql,$message->name,$message->date,$message->text);
+        databaseExecute($sql,$message->name,$message->content);
     }
 
-    private static function execute(string $sql, ...$params) {
-        $result = databaseExecute($sql,...$params);
-        return $result->fetch_all(MYSQLI_ASSOC);
+    public static function deleteAll() {
+        $sql = "DELETE FROM " . self::$tableName;
+
+        databaseExecute($sql);
     }
 }

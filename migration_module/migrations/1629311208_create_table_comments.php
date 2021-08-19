@@ -4,8 +4,8 @@
 (
     id serial PRIMARY KEY ,
     name varchar(20),
-    date timestamp DEFAULT now(),
-    content text 
+    content text,
+    date timestamp DEFAULT now()
 )";
     
     $rollback = "DROP TABLE comments";

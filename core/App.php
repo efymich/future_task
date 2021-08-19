@@ -2,14 +2,11 @@
 
 namespace core;
 
-use core\Response\Response_interface\iResponse;
 use core\Router\RouteContainer;
 use Twig\Environment;
-use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 
 require "database.php";
-require "helpers.php";
 
 
 class App
@@ -21,9 +18,8 @@ class App
         $type = strtolower($_SERVER['REQUEST_METHOD']);
         $response_arr = RouteContainer::Searcher($url, $type,array_merge(self::preparePostArray(),self::prepareGetArray()));
         databaseClose();
-        $page = 'index.html';
-        self:self::Run($page,$response_arr);
-
+        $page = 'index';
+        self::Run($page,$response_arr);
     }
 
     private static function Run(string $page, array $data = [])
@@ -37,12 +33,18 @@ class App
     private static function prepareGetArray(): array
     {
         $data = [];
-        return $data['get'] = $_GET;
+        foreach ($_GET as $key => $value) {
+            $data['post'][$key] = $value;
+        }
+        return $data;
     }
 
     private static function preparePostArray(): array
     {
         $data = [];
-        return $data['post'] = $_POST;
+        foreach ($_POST as $key => $value) {
+            $data['post'][$key] = $value;
+        }
+        return $data;
     }
 }

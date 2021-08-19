@@ -5,7 +5,6 @@ namespace app\Controllers;
 
 use app\Models\MessageRepo;
 use core\Model\Message;
-use mysqli_sql_exception;
 
 class BasicController
 {
@@ -15,19 +14,25 @@ class BasicController
 
     public function postComment(array $data) {
 
-        // TODO: описать проверку данных
-
-        //TODO: описать обработку ошибок
-
-        if (!isset($data['post']) || empty($data['post']['name']) || $data['post']['date'] || $data['post']['content']) {
+        if (empty($data['post']['name']) || empty($data['post']['content'])) {
             return ['error' => "Введите все данные"];
         }
 
-        $message = new Message($data['post']['name'],$data['post']['date'],$data['post']['content']);
+        $message = new Message(htmlspecialchars($data['post']['name'],ENT_DISALLOWED),htmlspecialchars($data['post']['content'],ENT_DISALLOWED));
 
         MessageRepo::putData($message);
 
         return $this->index();
     }
 
+    public function deleteAll(array $data) {
+
+        if (empty($data['post']['delete'])) {
+            return [];
+        }
+
+        MessageRepo::deleteAll();
+
+        return $this->index();
+    }
 }

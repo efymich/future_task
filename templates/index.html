@@ -3,25 +3,66 @@
     <meta charset="UTF-8">
     <title>Main page</title>
     <link href="css/bootstrap.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/efystyle.css">
+    <link href="css/future_style.css" rel="stylesheet">
 </head>
 <body>
-<div class="my_container">
-    <div class="my_header">
-
+<div class="container">
+    <div class="row" >
+        <div class="col">
+            <p>Телефон: (499) 340-94-71</p>
+            <p><i>Email: info@future-group.ru</i></p>
+        </div>
+        <div class="col">
+            <figure class="figure">
+                <a href="/">
+                    <img src="image/logo.png" class="figure-img img-fluid rounded" alt="...">
+                </a>
+            </figure>
+        </div>
     </div>
-    <div class="my_main">
+    <div class="row">
         <div class="error_alert">
             <b>{{ error }}</b>
         </div>
-        <div class="my_main_container">
-
+        <h1>Comments</h1>
+        {% for comment in _context|slice(0,last - 1) %}
+        <div class="comment">
+            <div class="card">
+                <h5 class="card-header">{{ comment.name }} {{ comment.date }}</h5>
+                <div class="card-body">
+                    <h5 class="card-title">{{ comment.content }}</h5>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="postform">
+            <form action="/" method="post">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Name</label>
+                    <input class="form-control" id="exampleFormControlInput1" name="name" placeholder="Alex">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">Comment</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="3"></textarea>
+                </div>
+                <input class="btn btn-primary" type="submit" value="Submit">
+            </form>
+            <form action="delete" method="post">
+                <input class="btn btn-primary" type="submit" name="delete" value="Delete all">
+            </form>
         </div>
     </div>
-    <div class="my_footer">
-        <div class="my_footer-copyright">
-        <span> {{ "now"|date('d/m/Y H:i', timezone="Europe/Moscow") }} Copyright &copy; 2021 by <a
-                href=""></a></span>
+    <div class="row">
+        <div class="my_footer">
+            <div><img src="image/logo.png" class="img-thumbnail" style="height: 100%; width: 150px;" alt="..."></div>
+            <div style="margin: 10px">
+                <p><b>Телефон: (499) 340-94-71</b></p>
+                <p><b>Email: info@future-group.ru</b></p>
+                <div class="my_footer-copyright">
+        <span> {{ "now"|date('d/m/Y H:i', timezone="Europe/Moscow") }} &copy; 2010-2014 Все права защищены.
+            <a href=""></a></span>
+                </div>
+            </div>
         </div>
     </div>
 </div>
